@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MobileTracker</string>
+    <string name="mobile_tracker">Mobile Tracker</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info">Info</string>
+    <string name="play_sound">PLAY SOUND</string>
+    <string name="vibrate_phone">VIBRATE PHONE</string>
+    <string name="get_location_sms">GET LOCATION (SMS)</string>
+    <string name="get_contact_sms">GET CONTACT (SMS)</string>
+    <string name="get_all_contacts_mms">GET ALL CONTACTS (MMS)</string>
+</resources>
