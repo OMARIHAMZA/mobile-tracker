@@ -1,6 +1,7 @@
 package omari.hamza.mobiletracker.views.activities;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -18,15 +20,28 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
+
 import omari.hamza.mobiletracker.R;
+import omari.hamza.mobiletracker.controllers.UserController;
+import omari.hamza.mobiletracker.core.models.Contact;
+import omari.hamza.mobiletracker.core.models.MyResponse;
+import omari.hamza.mobiletracker.core.utils.LoadingDialog;
+import omari.hamza.mobiletracker.core.utils.SMSListener;
 import omari.hamza.mobiletracker.views.fragments.DeviceFragment;
 import omari.hamza.mobiletracker.views.fragments.MapFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends MasterActivity {
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private SMSListener mReceiver;
+    private LoadingDialog mLoadingDialog;
+    private ArrayList<Contact> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +49,8 @@ public class MainActivity extends MasterActivity {
         super.onCreate(savedInstanceState);
         setupDrawer();
         setupViewPager();
+        mReceiver = new SMSListener();
+        mLoadingDialog = new LoadingDialog(this);
     }
 
     private void setupViewPager() {
@@ -67,6 +84,7 @@ public class MainActivity extends MasterActivity {
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
+                .withHeader(R.layout.custom_drawer_header)
                 .addDrawerItems(
                         item1,
                         new DividerDrawerItem(),
@@ -125,5 +143,19 @@ public class MainActivity extends MasterActivity {
             }
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(mReceiver);
     }
 }

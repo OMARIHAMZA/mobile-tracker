@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MobileTracker</string>
-    <string name="mobile_tracker">Mobile Tracker</string>
+    <string name="app_name">PhoneFinder</string>
+    <string name="mobile_tracker">PhoneFinder</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -10,4 +10,17 @@
     <string name="get_location_sms">GET LOCATION (SMS)</string>
     <string name="get_contact_sms">GET CONTACT (SMS)</string>
     <string name="get_all_contacts_mms">GET ALL CONTACTS (MMS)</string>
+    <string name="erase_all_data">ERASE ALL DATA</string>
+    <string name="login">Login</string>
+    <string name="track_your_device_without_internet_connection">TRACK YOUR DEVICE WITHOUT INTERNET CONNECTION</string>
+    <string name="mobile">MOBILE</string>
+    <string name="password">PASSWORD</string>
+    <string name="create_an_account">CREATE AN ACCOUNT</string>
+    <string name="valid_mobile">Enter a valid mobile number</string>
+    <string name="valid_password">Enter a valid password</string>
+    <string name="welcome_to_tracker">Welcome to Tracker</string>
+    <string name="phone_ex">Example: +963---------</string>
+    <string name="username">USERNAME</string>
+    <string name="register">REGISTER</string>
+    <string name="create_an_account_not_all_caps">Create an Account</string>
 </resources>

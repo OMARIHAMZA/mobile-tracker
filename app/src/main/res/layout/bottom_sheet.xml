@@ -71,6 +71,7 @@
             android:background="#A9A9A9" />
 
         <TextView
+            android:id="@+id/sound_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_ring"
@@ -88,6 +89,7 @@
             android:background="#A9A9A9" />
 
         <TextView
+            android:id="@+id/vibration_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_vibration_black_24dp"
@@ -105,6 +107,7 @@
             android:background="#A9A9A9" />
 
         <TextView
+            android:id="@+id/location_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_location"
@@ -122,6 +125,7 @@
             android:background="#A9A9A9" />
 
         <TextView
+            android:id="@+id/contact_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_person"
@@ -139,9 +143,10 @@
             android:background="#A9A9A9" />
 
         <TextView
+            android:id="@+id/all_contacts_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_people"
             android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
@@ -154,6 +159,21 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#A9A9A9" />
+
+
+        <TextView
+            android:id="@+id/erase_data_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_delete"
+            android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="@string/erase_all_data"
+            android:textColor="@color/md_red_A700"
+            android:textStyle="normal" />
+
 
     </LinearLayout>
 </LinearLayout>

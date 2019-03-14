@@ -7,6 +7,14 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -26,7 +34,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".views.activities.DeviceDetailsActivity"></activity>
+        <activity
+            android:name=".views.activities.SignupActivity"
+            android:theme="@style/SignupTheme" />
+
+        <activity android:name=".views.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".views.activities.DeviceDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -38,13 +57,15 @@
             android:name="com.mapbox.MAP_ID"
             android:value="mapbox.streets" />
 
-        <activity android:name=".views.activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".views.activities.MainActivity"></activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <receiver
+            android:name=".core.utils.SMSListener"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </activity>
+        </receiver>
     </application>
 
 </manifest>

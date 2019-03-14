@@ -7,17 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import omari.hamza.mobiletracker.R;
+import omari.hamza.mobiletracker.core.models.Contact;
 import omari.hamza.mobiletracker.views.activities.DeviceDetailsActivity;
 
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHolder> {
 
     private Activity mActivity;
+    private ArrayList<Contact> contacts;
 
-    public DevicesAdapter(Activity mActivity) {
+    public DevicesAdapter(Activity mActivity, ArrayList<Contact> contacts) {
         this.mActivity = mActivity;
+        this.contacts = contacts;
     }
 
     @NonNull
@@ -29,27 +35,41 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               mActivity.startActivity(new Intent(mActivity, DeviceDetailsActivity.class));
-            }
+        Contact currentContact = contacts.get(i);
+
+        myViewHolder.itemView.setOnClickListener(v -> {
+            Intent mIntent = new Intent(mActivity, DeviceDetailsActivity.class);
+            mIntent.putExtra("contact", currentContact);
+            mActivity.startActivity(mIntent);
         });
+
+        myViewHolder.infoButton.setOnClickListener(e -> {
+            Intent mIntent = new Intent(mActivity, DeviceDetailsActivity.class);
+            mIntent.putExtra("contact", currentContact);
+            mActivity.startActivity(mIntent);
+        });
+
+        myViewHolder.phoneNumberTextView.setText(currentContact.getPhone());
+        myViewHolder.phoneTypeTextView.setText(currentContact.getPhoneBrand() + " " + currentContact.getPhoneModel());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return contacts.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private View itemView;
         private TextView phoneTypeTextView, phoneNumberTextView;
+        private Button infoButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
+            this.phoneTypeTextView = itemView.findViewById(R.id.phone_model_textView);
+            this.phoneNumberTextView = itemView.findViewById(R.id.phone_textView);
+            this.infoButton = itemView.findViewById(R.id.info_button);
         }
     }
 }
