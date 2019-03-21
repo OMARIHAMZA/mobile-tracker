@@ -10,23 +10,31 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
 import android.graphics.Color;
-import android.location.Location;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.location.LocationListener;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Random;
 
 import omari.hamza.mobiletracker.R;
-import omari.hamza.mobiletracker.views.activities.MainActivity;
+import omari.hamza.mobiletracker.views.activities.HomeActivity;
 
 public class SMSListener extends BroadcastReceiver {
 
@@ -36,8 +44,6 @@ public class SMSListener extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        // TODO Auto-generated method stub
-
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
             SmsMessage[] msgs = null;
@@ -51,35 +57,39 @@ public class SMSListener extends BroadcastReceiver {
                         msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                         msg_from = msgs[i].getOriginatingAddress();
                         String msgBody = msgs[i].getMessageBody();
-                        sendNotification(context, msg_from, msgBody);
-                        switch (Integer.valueOf(msgBody)) {
+                        String[] messageBodySplitted = msgBody.split("\\|");
+                        switch (Integer.valueOf(messageBodySplitted[0])) {
                             case DeviceController.PLAY_SOUND_TAG: {
-                                DeviceController.ringDevice(context);
+                                if (UserUtils.getArrayList(context).contains(msg_from)){
+                                    DeviceController.ringDevice(context);
+                                }
                                 break;
                             }
 
                             case DeviceController.VIBRATE_TAG: {
-                                DeviceController.vibrateDevice(context);
+                                if (UserUtils.getArrayList(context).contains(msg_from)){
+                                    DeviceController.vibrateDevice(context);
+                                }
                                 break;
                             }
 
                             case DeviceController.GET_CURRENT_LOCATION_TAG: {
-
+                                if (UserUtils.getArrayList(context).contains(msg_from)){
+                                    sendSMS(msg_from, UserUtils.getLastLocation(context));
+                                }
                                 break;
                             }
 
                             case DeviceController.GET_SPECIFIC_CONTACT_TAG: {
-
+                                if (UserUtils.getArrayList(context).contains(msg_from)){
+                                    sendSMS(msg_from, DeviceController.findContactByName(context, messageBodySplitted[1]));
+                                }
                                 break;
                             }
-
-                            case DeviceController.GET_ALL_CONTACTS_TAG: {
-
-                                break;
-                            }
-
                             case DeviceController.ERASE_ALL_DATA_TAG: {
-
+                                if (UserUtils.getArrayList(context).contains(msg_from)){
+                                    DeviceController.erasePhoneData(context);
+                                }
                                 break;
                             }
                         }
@@ -93,7 +103,7 @@ public class SMSListener extends BroadcastReceiver {
     }
 
     private void sendNotification(Context context, String title, String body) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         String channelId;
@@ -132,5 +142,13 @@ public class SMSListener extends BroadcastReceiver {
             mNotificationManager.createNotificationChannel(mChannel);
         }
         return "CHANNEL";
+    }
+
+    private void sendSMS(String phone, String body) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phone, null, body, null, null);
+        } catch (Exception ignored) {
+        }
     }
 }

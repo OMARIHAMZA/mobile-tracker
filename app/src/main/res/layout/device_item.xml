@@ -29,7 +29,6 @@
                 android:text="Samsung Galaxy S9+"
                 android:textColor="@color/md_black_1000"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/phone_textView"
                 app:layout_constraintEnd_toStartOf="@+id/info_button"
                 app:layout_constraintStart_toStartOf="parent"

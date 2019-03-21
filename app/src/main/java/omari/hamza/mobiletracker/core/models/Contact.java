@@ -12,6 +12,9 @@ public class Contact implements Serializable {
     @SerializedName("friendship_id")
     private int friendshipId;
 
+    @SerializedName("request_id")
+    private int connectionRequestId;
+
     @SerializedName("username")
     private String username;
 
@@ -24,19 +27,30 @@ public class Contact implements Serializable {
     @SerializedName("phone_model")
     private String phoneModel;
 
-    private long longitude;
+    @SerializedName("long")
+    private String longitude;
 
-    private long latitude;
+    @SerializedName("lat")
+    private String latitude;
 
-    public Contact(int id, int friendshipId, String username, String phone, String phoneBrand, String phoneModel, long longitude, long latitude) {
+    public Contact(int id, int friendshipId, int connectionRequestId, String username, String phone, String phoneBrand, String phoneModel, String longitude, String latitude) {
         this.id = id;
         this.friendshipId = friendshipId;
+        this.connectionRequestId = connectionRequestId;
         this.username = username;
         this.phone = phone;
         this.phoneBrand = phoneBrand;
         this.phoneModel = phoneModel;
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public int getConnectionRequestId() {
+        return connectionRequestId;
+    }
+
+    public void setConnectionRequestId(int connectionRequestId) {
+        this.connectionRequestId = connectionRequestId;
     }
 
     public int getId() {
@@ -87,19 +101,19 @@ public class Contact implements Serializable {
         this.phoneModel = phoneModel;
     }
 
-    public long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 }

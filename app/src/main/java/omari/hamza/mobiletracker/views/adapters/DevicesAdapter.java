@@ -19,11 +19,11 @@ import omari.hamza.mobiletracker.views.activities.DeviceDetailsActivity;
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHolder> {
 
     private Activity mActivity;
-    private ArrayList<Contact> contacts;
+    private ArrayList<Contact> contacts = new ArrayList<>();
 
     public DevicesAdapter(Activity mActivity, ArrayList<Contact> contacts) {
         this.mActivity = mActivity;
-        this.contacts = contacts;
+        this.contacts.addAll(contacts);
     }
 
     @NonNull
@@ -50,7 +50,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.MyViewHo
         });
 
         myViewHolder.phoneNumberTextView.setText(currentContact.getPhone());
-        myViewHolder.phoneTypeTextView.setText(currentContact.getPhoneBrand() + " " + currentContact.getPhoneModel());
+        myViewHolder.phoneTypeTextView.setText(currentContact.getUsername() + " (" + currentContact.getPhoneModel() + ")");
     }
 
     @Override

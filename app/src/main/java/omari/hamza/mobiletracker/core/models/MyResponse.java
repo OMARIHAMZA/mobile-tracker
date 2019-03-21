@@ -19,12 +19,15 @@ public class MyResponse {
     @SerializedName("data")
     private ArrayList<Contact> contacts;
 
+
+
     public MyResponse(boolean success, String token, User user, ArrayList<Contact> contacts) {
         this.success = success;
         this.token = token;
         this.user = user;
         this.contacts = contacts;
     }
+
 
     public ArrayList<Contact> getContacts() {
         return contacts;

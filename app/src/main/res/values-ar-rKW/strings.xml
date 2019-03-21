@@ -1,4 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PhoneFinder</string>
+    <string name="info">المزيد</string>
+    <string name="play_sound">تشغيل صوت</string>
+    <string name="vibrate_phone">تشغيل الاهتزاز</string>
+    <string name="get_location_sms">الحصول على مكان الهاتف</string>
+    <string name="get_contact_sms">الحصول على جهة اتصال</string>
+    <string name="get_all_contacts_mms">الحصول على جميع جهات الاتصال</string>
+    <string name="erase_all_data">إعادة تهيئة الهاتف</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="track_your_device_without_internet_connection">تتبع هاتفك دون الحاجة إلى الإتصال بالانترنت</string>
+    <string name="mobile">الموبايل</string>
+    <string name="password">كلمة المرور</string>
+    <string name="create_an_account">أنشئ حساباً</string>
+    <string name="valid_mobile">أدخل رقم موبايل صحيح</string>
+    <string name="valid_password">أدخ كلمة مرور صحيحة</string>
+    <string name="welcome_to_tracker">أهلاً بك</string>
+    <string name="phone_ex">مثال: +963.....</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="register">التسجيل</string>
+    <string name="create_an_account_not_all_caps">إنشاء حساب</string>
+    <string name="required_field">هذا الحقل مطلوب</string>
+    <string name="connect_device">إضافة جهاز</string>
+    <string name="change_language">تغيير اللغة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="connection_requests">طلبات الإتصال</string>
+    <string name="connect">قبول</string>
+    <string name="reject">رفض</string>
+    <string name="connection_accepted">تم قبول الطلب</string>
+    <string name="connection_rejected">تم رفض الطلب</string>
+    <string name="request_sent">تم إرسال الطلب بنجاح</string>
+    <string name="sms_sent">تم إرسال الرسالة</string>
+    <string name="sms_not_sent">لم يتم إرسال الرسالة</string>
+    <string name="confirmation">تأكيد</string>
+    <string name="sms_message_send">سوف يتم إرسال رسالة نصية!</string>
+    <string name="contact_name">اسم جهة الاتصال</string>
+    <string name="send">إرسال</string>
+    <string name="map">الخريطة</string>
+    <string name="my_devices">الاجهزة الخاصة بي</string>
+    <string name="permissions_required">تفعيل الصلاحيات</string>
+    <string name="enable_all_permissions">يرجعى تفعيل الصلاحيات المطلوبة من واجهة معلومات البرنامج للمتابعة</string>
 </resources>

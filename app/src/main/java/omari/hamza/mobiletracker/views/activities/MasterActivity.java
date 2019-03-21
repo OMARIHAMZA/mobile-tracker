@@ -1,10 +1,21 @@
 package omari.hamza.mobiletracker.views.activities;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.widget.EditText;
 
-public abstract class MasterActivity extends AppCompatActivity {
+import omari.hamza.mobiletracker.R;
+import omari.hamza.mobiletracker.core.utils.MContextWrapper;
+import omari.hamza.mobiletracker.core.utils.UserUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public abstract class MasterActivity extends AppCompatActivity implements Callback {
 
 
     private int contentViewResource;
@@ -24,8 +35,50 @@ public abstract class MasterActivity extends AppCompatActivity {
 
     protected abstract void getData();
 
+    protected abstract void onSuccess(@NonNull Call call, @NonNull Response response);
+
+    protected abstract void onFailed(@NonNull Call call, @NonNull Throwable t);
+
+    protected boolean checkFields(EditText... editTexts) {
+        boolean allFieldsFilled = true;
+        for (EditText editText : editTexts) {
+            if (editText.getText().toString().equals("")) {
+                allFieldsFilled = false;
+                editText.setError(getString(R.string.required_field));
+            }
+        }
+        return allFieldsFilled;
+    }
+
+    @Override
+    public void onResponse(@NonNull Call call, @NonNull Response response) {
+        onSuccess(call, response);
+    }
+
+    @Override
+    public void onFailure(@NonNull Call call, @NonNull Throwable t) {
+        onFailed(call, t);
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         this.contentViewResource = layoutResID;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(MContextWrapper.wrap(newBase, UserUtils.getDeviceLanguage(newBase.getApplicationContext())));
     }
 }

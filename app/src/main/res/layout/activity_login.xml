@@ -57,9 +57,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="monospace"
-            android:hint="@string/mobile"
-            android:inputType="phone"
-            app:met_helperText="@string/phone_ex"
+            android:hint="@string/username"
+            android:inputType="text"
             android:nextFocusDown="@id/password_editText"
             app:layout_constraintBottom_toTopOf="@+id/password_editText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_chainStyle="packed"
             app:met_clearButton="true"
-            app:met_floatingLabel="highlight" />
+            app:met_floatingLabel="highlight"/>
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -81,7 +80,7 @@
             android:fontFamily="monospace"
             android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/login_button"
+            app:layout_constraintBottom_toTopOf="@+id/register_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phone_editText"
@@ -101,11 +100,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_button" />
+            app:layout_constraintTop_toBottomOf="@+id/register_button" />
 
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/register_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

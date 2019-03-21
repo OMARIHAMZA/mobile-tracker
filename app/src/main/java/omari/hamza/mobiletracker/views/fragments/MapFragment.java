@@ -6,24 +6,36 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.airbnb.android.airmapview.AirMapView;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import omari.hamza.mobiletracker.R;
+import omari.hamza.mobiletracker.controllers.UserController;
+import omari.hamza.mobiletracker.core.models.Contact;
+import omari.hamza.mobiletracker.core.models.MyResponse;
+import omari.hamza.mobiletracker.core.utils.LoadingDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     //    private AirMapView mapView;
     private GoogleMap googleMap;
     private MapView mapView;
+    private LoadingDialog mLoadingDialog;
+    private ArrayList<Contact> contacts;
 
     public MapFragment() {
         // Required empty public constructor
@@ -43,39 +55,80 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void getData() {
+        if (getContext() == null || getActivity() == null) return;
+        if (mLoadingDialog == null) mLoadingDialog = new LoadingDialog(getActivity());
+        mLoadingDialog.show();
+        UserController.getContacts(getContext(), new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                mLoadingDialog.dismiss();
+                contacts = new ArrayList<>(response.body().getContacts());
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                boolean includedPoints = false;
+                if (googleMap != null) {
+                    for (Contact contact : contacts) {
+                        try {
+                            MarkerOptions marker = new MarkerOptions()
+                                    .position(new LatLng(Double.valueOf(contact.getLatitude()), Double.valueOf(contact.getLongitude())))
+                                    .anchor(0.5f, 0.5f)
+                                    .title(contact.getUsername() + " (" + contact.getPhoneBrand() + " " + contact.getPhoneModel() + ")");
+                            googleMap.addMarker(marker);
+                            builder.include(marker.getPosition());
+                            includedPoints = true;
+                        } catch (Exception ignored) {
+
+                        }
+                    }
+                    if (!includedPoints) return;
+                    LatLngBounds bounds = builder.build();
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
+                    googleMap.animateCamera(cu);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+                mLoadingDialog.dismiss();
+            }
+        });
     }
 
     private void findViewsById(View view) {
         mapView = view.findViewById(R.id.mapView);
         mapView.getMapAsync(this);
-//        mapView = view.findViewById(R.id.airMapView);
-//        mapView.initialize(getChildFragmentManager());
     }
 
 
     @Override
     public void onMapReady(GoogleMap mGoogleMap) {
         googleMap = mGoogleMap;
+        if (contacts == null) {
+            getData();
+        } else {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            boolean includedPoints = false;
+            for (Contact contact : contacts) {
+                try {
+                    MarkerOptions marker = new MarkerOptions()
+                            .position(new LatLng(Double.valueOf(contact.getLatitude()), Double.valueOf(contact.getLongitude())))
+                            .anchor(0.5f, 0.5f)
+                            .title(contact.getUsername() + " (" + contact.getPhoneBrand() + " " + contact.getPhoneModel() + ")");
+                    googleMap.addMarker(marker);
+                    builder.include(marker.getPosition());
+                    includedPoints = true;
+                } catch (Exception ignored) {
 
-        LatLng latLng = new LatLng(35.5407, 35.7953);
-        // Creating a marker
-        MarkerOptions markerOptions = new MarkerOptions();
-
-        // Setting the position for the marker
-        markerOptions.position(latLng);
-
-        // Setting the title for the marker.
-        // This will be displayed on taping the marker
-        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-
-        // Clears the previously touched position
-        googleMap.clear();
-
-        // Animating to the touched position
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        // Placing a marker on the touched position
-        googleMap.addMarker(markerOptions);
+                }
+            }
+            if (!includedPoints) return;
+            LatLngBounds bounds = builder.build();
+            int width = getResources().getDisplayMetrics().widthPixels;
+            int height = getResources().getDisplayMetrics().heightPixels;
+            int padding = (int) (width * 0.10); // offset from edges of the map 10% of screen
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+            googleMap.animateCamera(cu);
+        }
     }
 
     @Override

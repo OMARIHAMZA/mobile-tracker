@@ -28,17 +28,20 @@
 
     <application
         android:allowBackup="true"
+        android:name=".views.MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".views.activities.ConnectionRequestsActivity"></activity>
         <activity
             android:name=".views.activities.SignupActivity"
             android:theme="@style/SignupTheme" />
-
-        <activity android:name=".views.activities.LoginActivity">
+        <activity
+            android:name=".views.activities.LoginActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +60,7 @@
             android:name="com.mapbox.MAP_ID"
             android:value="mapbox.streets" />
 
-        <activity android:name=".views.activities.MainActivity"></activity>
+        <activity android:name=".views.activities.HomeActivity" />
 
         <receiver
             android:name=".core.utils.SMSListener"
@@ -66,6 +69,22 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".core.utils.DemoDeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <intent-filter>
+
+                <!-- This action is required -->
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+
+            <!-- This is required this receiver to become device admin component. -->
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+        </receiver>
+
+        <service android:name=".core.utils.LocationService" />
     </application>
 
 </manifest>
