@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="omari.hamza.mobiletracker.views.activities.DeviceDetailsActivity">
+    tools:context="com.mobiletracker.views.activities.DeviceDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

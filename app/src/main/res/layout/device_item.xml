@@ -41,7 +41,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="+963994150392"
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toStartOf="@+id/info_button"
                 app:layout_constraintStart_toStartOf="parent"

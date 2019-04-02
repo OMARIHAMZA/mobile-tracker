@@ -55,8 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             app:layout_constraintVertical_chainStyle="packed"
             app:met_clearButton="true"
-            app:met_floatingLabel="highlight"
-            app:met_helperText="@string/phone_ex" />
+            app:met_floatingLabel="highlight"/>
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
